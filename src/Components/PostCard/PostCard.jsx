@@ -1,15 +1,18 @@
 import { useState, useEffect, useContext } from 'react'
-
-import SinglePostCard from './SinglePostCard'
-
 import PostContext from '../../context/PostContext'
 
-export default function PostCard() {
-    const { PostListApiUrl, baseApiUrl } = useContext(PostContext)
-    const [blogDataApi, setBlogDataApi] = useState({})
 
+
+
+const url = 'http://localhost:3000'
+const endpoint = '/post/'
+
+export default function PostCard() {
+
+    const [blogDataApi, setBlogDataApi] = useState({})
+    const { PostList } = useContext(PostContext)
     function fetchData() {
-        fetch(PostListApiUrl)
+        fetch(`${url}${endpoint}`)
             .then(resp => resp.json())
             .then(data => {
                 console.log(data);
@@ -28,7 +31,7 @@ export default function PostCard() {
         console.log(titleToRemove);
 
 
-        fetch(`${PostListApiUrl}${titleToRemove}`, {
+        fetch(`${url}${endpoint}${titleToRemove}`, {
             method: 'DELETE',
             headers: {
                 'content-Type': 'application/json'
@@ -48,16 +51,7 @@ export default function PostCard() {
 
 
     return (
-        <div className="row">
-            {blogDataApi.data ? (
-                blogDataApi.data.map((post, index) => (
-                    <SinglePostCard post={post} key={index} url={baseApiUrl} handleRemoveTitle={() => handleRemoveTitle(post.id)} />
-
-                ))
-            ) : (
-                <p>Nessuna ricetta trovata.</p>
-            )}
-        </div>
+        <PostList blogDataApi={blogDataApi} url={url} handleRemoveTitle={handleRemoveTitle} />
 
     )
 

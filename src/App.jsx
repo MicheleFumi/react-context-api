@@ -9,13 +9,12 @@ import SingleRecipePage from './pages/SingleRecipePage'
 import NotFound from './pages/NotFound'
 import HomePage from './pages/HomePage'
 import PostContext from './context/PostContext'
+import PostList from './Components/PostCard/PostList'
 function App() {
-  const PostListApiUrl = 'http://localhost:3000/post'
-  const baseApiUrl = 'http://localhost:3000/'
 
   return (
     <>
-      <PostContext.Provider value={{ PostListApiUrl, baseApiUrl }}>
+      <PostContext.Provider value={{ PostList }}>
         <BrowserRouter>
           <Routes>
             <Route element={<DefaultLayout />}>
